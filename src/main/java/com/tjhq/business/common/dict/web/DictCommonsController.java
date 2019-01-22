@@ -1,12 +1,17 @@
 package com.tjhq.business.common.dict.web;
 
+import com.tjhq.business.common.dict.service.IDictCommonsService;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @description：录入表定义界面入口类
@@ -23,6 +28,9 @@ public class DictCommonsController {
 
     private Logger logger = LoggerFactory.getLogger(DictCommonsController.class);
 
+    @Resource(name = "dictCommonsServiceImpl")
+    private IDictCommonsService dictCommonsService;
+
     @RequestMapping(value = "page")
     public String page(Model model) {
 
@@ -33,6 +41,16 @@ public class DictCommonsController {
             e.printStackTrace();
         }
         model.addAttribute("apps", apps);
+
+
+        return returnStr + "dictCommons";
+    }
+    @RequestMapping(value = "getApp")
+    public String getApp(Model model) {
+        List<Map<String,String>> appInfos = dictCommonsService.getApp();
+
+
+        model.addAttribute("appInfos", appInfos);
 
 
         return returnStr + "dictCommons";
