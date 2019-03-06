@@ -5,9 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.slf4j.Logger;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,7 +23,8 @@ import java.util.Map;
  * @date  ：Created in 2019/1/9 17:00
  */
 @Controller
-@RequestMapping(value = "/commons/dict/")
+@RequestMapping(value = "/api/commons/dict/")
+@CrossOrigin
 public class DictCommonsController {
 
     private static String returnStr = "commons/dict/";
@@ -46,13 +49,14 @@ public class DictCommonsController {
         return returnStr + "dictCommons";
     }
     @RequestMapping(value = "getApp")
-    public String getApp(Model model) {
+    @ResponseBody
+    public List<Map<String,String>> getApp(Model model) {
         List<Map<String,String>> appInfos = dictCommonsService.getApp();
 
 
         model.addAttribute("appInfos", appInfos);
 
-
-        return returnStr + "dictCommons";
+        return appInfos;
+      //  return returnStr + "dictCommons";
     }
 }
